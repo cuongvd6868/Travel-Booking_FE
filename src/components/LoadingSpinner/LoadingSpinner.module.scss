@@ -1,0 +1,79 @@
+// src/components/LoadingSpinner/LoadingSpinner.module.scss
+$primary-color: #6a4c93;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+
+  &.full-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+  }
+}
+
+.spinner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &.small {
+    width: 30px;
+    height: 30px;
+  }
+
+  &.medium {
+    width: 50px;
+    height: 50px;
+  }
+
+  &.large {
+    width: 70px;
+    height: 70px;
+  }
+
+  div {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    background: $primary-color;
+    animation: spinner-animation 1.2s linear infinite;
+  }
+
+  .dot1 {
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0s;
+  }
+
+  .dot2 {
+    top: 25%;
+    right: 15%;
+    animation-delay: 0.1s;
+  }
+
+  .dot3 {
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    animation-delay: 0.2s;
+  }
+}
+
+@keyframes spinner-animation {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
