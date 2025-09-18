@@ -6,7 +6,7 @@ import { handleError } from "~/utils/handleError";
 
 export const registerAPI = async (email:string, username: string, password: string) => {
     try {
-        const data = await axios.post<UserProfileToken>(API_BASE_URL + "account/register", { //<UserProfileToken> là kiểu TypeScript mà bạn kỳ vọng server trả về (gồm token, tên người dùng,...).
+        const data = await axios.post<UserProfileToken>(API_BASE_URL + "account/register", {
             email: email,   
             username: username,
             password: password 
@@ -32,7 +32,6 @@ export const loginAPI = async (username: string, password: string) => {
 
 const TOKEN_KEY = 'authToken';
 
-// Secure token storage with validation
 export const storeToken = (token: string): boolean => {
   if (!token || typeof token !== 'string') {
     console.error('Invalid token format');
@@ -40,7 +39,6 @@ export const storeToken = (token: string): boolean => {
   }
 
   try {
-    // Basic JWT structure validation
     const parts = token.split('.');
     if (parts.length !== 3) {
       console.error('Invalid JWT structure');
@@ -59,7 +57,6 @@ export const getToken = (): string | null => {
   try {
     const token = localStorage.getItem(TOKEN_KEY);
     
-    // Validate token exists and has proper format
     if (!token || token.split('.').length !== 3) {
       removeToken();
       return null;
@@ -89,7 +86,6 @@ export const parseTokenPayload = (): any | null => {
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const payload = JSON.parse(atob(base64));
     
-    // Validate essential claims
     if (!payload.exp || !payload.sub) {
       console.error('Token missing required claims');
       return null;

@@ -1,16 +1,17 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { UserProvider } from './context/useAuth';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
+  const location = useLocation();
+  const showNavbar = location.pathname !== '/login';
+
   return (
-    <>
     <UserProvider>
-      <Navbar/>
+      {showNavbar && <Navbar/>}
       <Outlet/>
     </UserProvider>
-    </>
   );
 }
 

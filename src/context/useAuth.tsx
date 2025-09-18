@@ -61,7 +61,6 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
                 handleAuthSuccess(res.data);
                 toast.success("Login successful!");
                 navigate("/");
-                // navigate("/technician-manage/1");
             }
         } catch (error) {
             toast.error("Login failed. Please try again.");
