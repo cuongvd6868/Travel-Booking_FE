@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import styles from './LoginPage.module.scss'; // Import the CSS module
-import { useAuth } from '~/context/useAuth'; // Adjust path as needed for your UserContext
-import { toast } from 'react-toastify'; // For displaying notifications
+import styles from './LoginPage.module.scss'; 
+import { useAuth } from '~/context/useAuth'; 
+import { toast } from 'react-toastify'; 
 import NavbarLogin from '~/components/NavbarLogin/NavbarLogin';
 import logImg from '~/assets/img/login/log.svg';
 import resImg from '~/assets/img/login/register.svg';
@@ -75,16 +75,16 @@ const LoginPage: React.FC = () => {
                             <p className={cx('social-text')}>Or Sign in with social platforms</p>
                             <div className={cx('social-media')}>
                                 <a href="#" className={cx('social-icon')}>
-                                    <i className="fab fa-facebook-f"></i>
+                                    <i className={cx('fab fa-facebook-f')}></i>
                                 </a>
                                 <a href="#" className={cx('social-icon')}>
-                                    <i className="fab fa-twitter"></i>
+                                    <i className={cx('fab fa-twitter')}></i>
                                 </a>
                                 <a href="#" className={cx('social-icon')}>
-                                    <i className="fab fa-google"></i>
+                                    <i className={cx('fab fa-google')}></i>
                                 </a>
                                 <a href="#" className={cx('social-icon')}>
-                                    <i className="fab fa-linkedin-in"></i>
+                                    <i className={cx('fab fa-linkedin-in')}></i>
                                 </a>
                             </div>
                         </form>

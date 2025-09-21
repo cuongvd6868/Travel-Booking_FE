@@ -10,17 +10,17 @@ interface LoadingSpinnerProps {
   className?: string;
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  fullPage = false, 
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  fullPage = false,
   size = 'medium',
-  className 
+  className,
 }) => {
   return (
     <div className={cx('container', { 'full-page': fullPage }, className)}>
       <div className={cx('spinner', size)}>
-        <div className={cx('dot1')}></div>
-        <div className={cx('dot2')}></div>
-        <div className={cx('dot3')}></div>
+        <div className={cx('dot', 'dot1')}></div>
+        <div className={cx('dot', 'dot2')}></div>
+        <div className={cx('dot', 'dot3')}></div>
       </div>
     </div>
   );

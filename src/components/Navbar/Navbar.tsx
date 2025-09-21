@@ -84,6 +84,7 @@ const Navbar: React.FC = () => {
             <h1 className={cx('search-title')}>Tìm chỗ nghỉ tiếp theo</h1>
             <p className={cx('search-subtitle')}>Khám phá hàng nghìn ưu đãi hấp dẫn cho khách sạn, căn hộ, resort và nhiều loại hình chỗ nghỉ khác, phù hợp cho mọi chuyến đi của bạn...</p>
             
+            {/* Search box */}
             <div className={cx('search-box')}>
               <div className={cx('search-input', 'location')}>
                 <label className={cx('search-box_lable')}>Địa điểm</label>
