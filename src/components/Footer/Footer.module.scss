@@ -75,6 +75,14 @@ $hover-color: #007bff; // Màu xanh dương nổi bật khi hover
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
   }
+  .ks {
+    font-size: 1.4rem;
+  }
+
+  a {
+    font-size: 1.2rem;
+  }
+
 }
 
 .column {

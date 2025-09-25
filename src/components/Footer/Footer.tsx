@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
         
         <div className={cx('links-section')}>
           <div className={cx('column')}>
-            <h3>Khách sạn</h3>
+            <h3 className={cx('ks')}>Khách sạn</h3>
             <ul>
               <li><a href="#">Khách sạn Việt Nam</a></li>
               <li><a href="#">Khách sạn quốc tế</a></li>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div className={cx('column')}>
-            <h3>Hỗ trợ</h3>
+            <h3 className={cx('ks')}>Hỗ trợ</h3>
             <ul>
               <li><a href="#">Trung tâm trợ giúp</a></li>
               <li><a href="#">Liên hệ chúng tôi</a></li>
@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div className={cx('column')}>
-            <h3>Công ty</h3>
+            <h3 className={cx('ks')}>Công ty</h3>
             <ul>
               <li><a href="#">Về chúng tôi</a></li>
               <li><a href="#">Tuyển dụng</a></li>
