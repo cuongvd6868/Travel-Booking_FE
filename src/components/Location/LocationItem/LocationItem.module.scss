@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #eee;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.location_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff4d4f; // màu đỏ nổi bật
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.location_detail {
+  display: flex;
+  flex-direction: column;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.name {
+  text-align: start;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.address {
+  font-size: 1.2rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

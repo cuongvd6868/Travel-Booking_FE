@@ -7,9 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faMapMarkerAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-
-
-
 const cx = classNames.bind(styles);
 
 interface LocationCardProps {
@@ -18,7 +15,6 @@ interface LocationCardProps {
 
 const LocationCard: React.FC<LocationCardProps> = ({ location }) => (
     <div className={cx('location-card')}>
-        {/* Card tinh tế sẽ không có overlay cầu kỳ */}
         
         <div className={cx('image-container')}>
             <img 
@@ -71,7 +67,6 @@ const LocationList: React.FC = () => {
         }
     }, []);
 
-    // --- Conditional Rendering for State ---
     if (loading) {
         return (
             <><LoadingSpinner/></>
@@ -86,8 +81,6 @@ const LocationList: React.FC = () => {
             </div>
         );
     }
-
-
 
     return (
         <div className={cx('wrapper')}>

@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from './Navbar.module.scss';
 import DatePicker from '../DatePicker/DatePicker';
 import { Link } from "react-router-dom";
+import HeadlessTippy from '@tippyjs/react/headless';
+import Popper from "../Popper/Popper";
+import LocationItem from "../Location/LocationItem/LocationItem";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { LocationTV } from "~/types/Location";
+import { getLocationsByName } from "~/services/LocationService";
 
 const cx = classNames.bind(styles);
 
@@ -20,16 +26,19 @@ const getInitialDateRange = () => {
 };
 
 const Navbar: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("stay");
-  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
-  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDates, setSelectedDates] = useState({
     checkIn: null as Date | null,
     checkOut: null as Date | null,
-    // Cập nhật giá trị khởi tạo tại đây
     displayText: getInitialDateRange()
   });
+  //select location
+  const [searchLocationResult, setSearchLocationResult] = useState<LocationTV[]>([]);
+  const [showLocationResult, setShowLocationResult] = useState(true);
+  const [inputLocationValue, setInputLocationValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string|null>(null);
+
 
   const handleDateSelect = (checkIn: Date | null, checkOut: Date | null) => {
     if (checkIn && checkOut) {
@@ -45,6 +54,48 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const handleHideResult = () => {
+    setShowLocationResult(false);
+  }
+// src/components/Navbar/Navbar.tsx
+
+const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 1. Cập nhật giá trị input
+    setInputLocationValue(e.target.value);
+    
+    // 2. BẬT hiển thị kết quả (chỉ bật nếu có giá trị)
+    if (e.target.value.trim() !== '') {
+        setShowLocationResult(true);
+    } else {
+        // Tùy chọn: Ẩn nếu xóa hết ký tự
+        setShowLocationResult(false);
+    }
+}
+
+  const handleLocationSelect = (selectedName: string) => {
+    setInputLocationValue(selectedName)
+    setShowLocationResult(false)
+  }
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const apiResponse = await getLocationsByName(inputLocationValue); //await sẽ dừng lại cho đến khi lời hứa hoàn thành.
+        const safeResults = apiResponse ?? []; 
+        setSearchLocationResult(safeResults);
+      } catch (error) {
+        console.log('lỗi không lấy được dữ liệu:', error);
+        setError('Lỗi không lấy được dữ liệu, vui lòng thử lại sau')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchLocations()
+  }, [inputLocationValue])
+
+
   return (
     <>
       <header className={cx('wrapper')}>
@@ -57,21 +108,6 @@ const Navbar: React.FC = () => {
                 </Link>
             </div>
             <div className={cx('right-section')}>
-              {/* <div className={cx('dropdown-container')}>
-                <button 
-                  className={cx('dropdown-toggle')}
-                  onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
-                >
-                  <span className={cx('icon')}>💰</span>USD
-                </button>
-                {showCurrencyDropdown && (
-                  <div className={cx('dropdown-menu')}>
-                    <div className={cx('dropdown-item')}>VND</div>
-                    <div className={cx('dropdown-item')}>EUR</div>
-                    <div className={cx('dropdown-item')}>GBP</div>
-                  </div>
-                )}
-              </div> */}
               <a href="#" className={cx('top-nav-item')}>Hoạt động</a>
               <Link to={'/login'} className={cx('top-nav-item')}>Đăng nhập</Link>
             </div>
@@ -84,36 +120,47 @@ const Navbar: React.FC = () => {
             <h1 className={cx('search-title')}>Tìm chỗ nghỉ tiếp theo</h1>
             <p className={cx('search-subtitle')}>Khám phá hàng nghìn ưu đãi hấp dẫn cho khách sạn, căn hộ, resort và nhiều loại hình chỗ nghỉ khác, phù hợp cho mọi chuyến đi của bạn...</p>
             
+
             {/* Search box */}
-            <div className={cx('search-box')}>
-              <div className={cx('search-input', 'location')}>
-                <label className={cx('search-box_lable')}>Địa điểm</label>
-                <input type="text" placeholder="Nhập điểm đến của bạn..." className={cx('search-box-input')}/>
+            <HeadlessTippy
+                interactive={true}
+                visible={showLocationResult && searchLocationResult.length >= 1}
+                placement="bottom-start"
+                render={attrs => (
+                    <div className={cx('search-result')}>
+                        <Popper>
+                          {searchLocationResult.map((location) => (
+                            <LocationItem key={location.id} name={location.name} address={location.address} onSelect={handleLocationSelect}/>
+                          ))}
+                        </Popper>
+                    </div>
+                )}
+                onClickOutside={handleHideResult}
+            >
+              <div className={cx('search-box')}>
+                <div className={cx('search-input', 'location')}>
+                  {/* <div> */}
+
+                  <label className={cx('search-box_lable')}>Địa điểm</label>
+                  <input type="text" placeholder="Nhập điểm đến của bạn..." className={cx('search-box-input')} 
+                    value={inputLocationValue}
+                    onChange={handleInputChange}/>
+                  
+                </div>
+                
+                <div className={cx('search-input', 'date')} onClick={() => setIsDatePickerOpen(true)}>
+                  <label className={cx('search-box_lable')}>Ngày</label>
+                  <input  type="text"  readOnly  value={selectedDates.displayText} placeholder="Chọn ngày"  className={cx('search-box-input')}/>
+                </div>
+                
+                <div className={cx('search-input', 'guests')}>
+                  <label className={cx('search-box_lable')}>Khách & Phòng</label>
+                  <input type="text" placeholder="2 người lớn - 0 trẻ em - 1 phòng" className={cx('search-box-input')}/>
+                </div>
+
+                <button className={cx('search-button')}>Tìm kiếm</button>
               </div>
-              
-              <div 
-                className={cx('search-input', 'date')}
-                onClick={() => setIsDatePickerOpen(true)}
-              >
-                <label className={cx('search-box_lable')}>Ngày</label>
-                <input 
-                  type="text" 
-                  readOnly 
-                  value={selectedDates.displayText}
-                  placeholder="Chọn ngày" 
-                  className={cx('search-box-input')}
-                />
-              </div>
-              
-              <div className={cx('search-input', 'guests')}>
-                <label className={cx('search-box_lable')}>Khách & Phòng</label>
-                <input type="text" placeholder="2 người lớn - 0 trẻ em - 1 phòng" className={cx('search-box-input')}/>
-              </div>
-              
-              <button className={cx('search-button')}>
-                Tìm kiếm
-              </button>
-            </div>
+            </HeadlessTippy>
           </div>
         </div>
       </header>
