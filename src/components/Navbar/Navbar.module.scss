@@ -225,6 +225,7 @@ $gradient-bg: linear-gradient(to right, #0F172A, #1A202C);
   left: 50%;
   transform: translate(-50%, 50%);
   width: 68%;
+  max-height: 77px;
 
   .search-box_lable {
     font-size: 1.4rem;
@@ -317,4 +318,5 @@ $gradient-bg: linear-gradient(to right, #0F172A, #1A202C);
     justify-content: center;
   }
 }
+
 

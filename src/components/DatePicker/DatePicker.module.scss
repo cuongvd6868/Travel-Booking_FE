@@ -73,7 +73,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
 }
 
 .header-title {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: $dark-text;
   margin: 0;
@@ -116,13 +116,13 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
  
 
   .label {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: $subtle-text;
     margin-bottom: 0.25rem;
   }
 
   .value {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: $primary-blue;
     text-align: center;
@@ -190,7 +190,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
 }
 
 .month-title {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: $dark-text;
   min-width: 180px;
@@ -221,7 +221,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
 }
 
 .week-day {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   color: $subtle-text;
   font-weight: 500;
   padding: 0.5rem 0;
@@ -240,7 +240,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -305,7 +305,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
 }
 
 .quick-selection-title {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: $dark-text;
   margin-bottom: 0.75rem;
@@ -323,7 +323,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
   border: 1px solid $border-color;
   border-radius: 0.5rem;
   padding: 0.7rem 1.2rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -352,7 +352,7 @@ $close-button-hover: #DC3545; // Mới: Màu đỏ cho nút đóng
   border: none;
   border-radius: 0.5rem;
   padding: 0.8rem 1.8rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;

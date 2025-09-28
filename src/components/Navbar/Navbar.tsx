@@ -9,6 +9,7 @@ import LocationItem from "../Location/LocationItem/LocationItem";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { LocationTV } from "~/types/Location";
 import { getLocationsByName } from "~/services/LocationService";
+import GuestAndRoomPicker from "../GuestAndRoomPicker/GuestAndRoomPicker";
 
 const cx = classNames.bind(styles);
 
@@ -38,6 +39,25 @@ const Navbar: React.FC = () => {
   const [inputLocationValue, setInputLocationValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string|null>(null);
+    
+    // --- 3. State cho Guest/Room Picker ---
+  const [isGuestsPickerOpen, setIsGuestsPickerOpen] = useState(false);
+  const [guestDetails, setGuestDetails] = useState({
+    adults: 2,
+    children: 0,
+    rooms: 1
+  });
+
+    // Helper để tạo chuỗi hiển thị Guest/Room
+    const getGuestDisplayText = (): string => {
+        const { adults, children, rooms } = guestDetails;
+        return `${adults} người lớn - ${children} trẻ em - ${rooms} phòng`;
+    };
+
+    // Hàm xử lý chọn Guest/Room từ Modal
+    const handleGuestSelect = (adults: number, children: number, rooms: number) => {
+        setGuestDetails({ adults, children, rooms });
+    };
 
 
   const handleDateSelect = (checkIn: Date | null, checkOut: Date | null) => {
@@ -57,20 +77,17 @@ const Navbar: React.FC = () => {
   const handleHideResult = () => {
     setShowLocationResult(false);
   }
-// src/components/Navbar/Navbar.tsx
 
-const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 1. Cập nhật giá trị input
-    setInputLocationValue(e.target.value);
-    
-    // 2. BẬT hiển thị kết quả (chỉ bật nếu có giá trị)
-    if (e.target.value.trim() !== '') {
-        setShowLocationResult(true);
-    } else {
-        // Tùy chọn: Ẩn nếu xóa hết ký tự
-        setShowLocationResult(false);
-    }
-}
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+     setInputLocationValue(e.target.value);
+      // 2. BẬT hiển thị kết quả (chỉ bật nếu có giá trị)
+      if (e.target.value.trim() !== '') {
+          setShowLocationResult(true);
+      } else {
+          // Tùy chọn: Ẩn nếu xóa hết ký tự
+          setShowLocationResult(false);
+      }
+  }
 
   const handleLocationSelect = (selectedName: string) => {
     setInputLocationValue(selectedName)
@@ -139,7 +156,6 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             >
               <div className={cx('search-box')}>
                 <div className={cx('search-input', 'location')}>
-                  {/* <div> */}
 
                   <label className={cx('search-box_lable')}>Địa điểm</label>
                   <input type="text" placeholder="Nhập điểm đến của bạn..." className={cx('search-box-input')} 
@@ -153,10 +169,20 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                   <input  type="text"  readOnly  value={selectedDates.displayText} placeholder="Chọn ngày"  className={cx('search-box-input')}/>
                 </div>
                 
-                <div className={cx('search-input', 'guests')}>
-                  <label className={cx('search-box_lable')}>Khách & Phòng</label>
+                {/* <div className={cx('search-input', 'guests')}>
+                  <label className={cx('search-box_lable')}>Khách</label>
                   <input type="text" placeholder="2 người lớn - 0 trẻ em - 1 phòng" className={cx('search-box-input')}/>
-                </div>
+                </div> */}
+                <div className={cx('search-input', 'guests')} onClick={() => setIsGuestsPickerOpen(true)}>
+{/*                     <label className={cx('search-box_lable')}>Khách & Phòng</label> */}
+
+                    <input 
+                        type="text" 
+                        readOnly 
+                        value={getGuestDisplayText()} 
+                        className={cx('search-box-input')}
+                    />
+                </div>
 
                 <button className={cx('search-button')}>Tìm kiếm</button>
               </div>
@@ -170,6 +196,16 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         isOpen={isDatePickerOpen}
         onClose={() => setIsDatePickerOpen(false)}
         onDateSelect={handleDateSelect}
+      />
+
+            {/* Guest & Room Picker Modal */}
+      <GuestAndRoomPicker
+          isOpen={isGuestsPickerOpen}
+          onClose={() => setIsGuestsPickerOpen(false)}
+          onSelect={handleGuestSelect}
+          initialAdults={guestDetails.adults}
+          initialChildren={guestDetails.children}
+          initialRooms={guestDetails.rooms}
       />
     </>
   );

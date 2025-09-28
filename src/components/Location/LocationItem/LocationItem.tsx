@@ -19,7 +19,6 @@ const LocationItem: React.FC<data> = ({id, name, address, onSelect}) => {
 
     const handleClick = () => {
         onSelect?.(name || '')
-        console.log(name)
     }
 
     return (
